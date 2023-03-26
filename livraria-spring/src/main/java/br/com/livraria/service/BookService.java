@@ -18,11 +18,11 @@ public class BookService {
     @Autowired
     private ResponseModel responseModel;
 
-    public Iterable<BookModel> list(){
+    public Iterable<BookModel> listBook(){
         return bookRepository.findAll();
     }
 
-    public ResponseEntity<?> register(BookModel bookModel){
+    public ResponseEntity<?> registerChange(BookModel bookModel, String action){
         if(bookModel.getName().equals("")){
             responseModel.setMessage("O nome do livro é obrigatório!");
             return new ResponseEntity<ResponseModel>(responseModel, HttpStatus.BAD_REQUEST);
@@ -33,7 +33,12 @@ public class BookService {
             responseModel.setMessage("O número de páginas é obrigatório!");
             return new ResponseEntity<ResponseModel>(responseModel, HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<BookModel>(bookRepository.save(bookModel), HttpStatus.CREATED);
+            if (action.equals("register")){
+                return new ResponseEntity<BookModel>(bookRepository.save(bookModel), HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<BookModel>(bookRepository.save(bookModel), HttpStatus.OK);
+            }
+
         }
     }
 

@@ -22,9 +22,7 @@ public class BookModel {
     private String author;
     @NotNull
     private Integer pages;
-    @ManyToMany
-    private List<BookCategoryModel> bookCategoryModels;
-
-
+    @NotNull
+    private String category;
 
 }
