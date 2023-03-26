@@ -42,4 +42,10 @@ public class BookService {
         }
     }
 
+    public ResponseEntity<ResponseModel> removeBook(long idBook){
+        bookRepository.deleteById(idBook);
+        responseModel.setMessage("o livrro foi removido com sucesso!");
+        return new ResponseEntity<ResponseModel>(responseModel, HttpStatus.OK);
+    }
+
 }
