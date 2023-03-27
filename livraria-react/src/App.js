@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import Header from './components/Header/Header';
+import Table from './components/RegisterBook/Table/Table';
 
 function App() {
+
+  const book = {
+    idBook : 0,
+    name : '',
+    author : '',
+    pages : '',
+    category : ''
+  }
+
+  const [btnRegister, setBtnRegister] = useState(true);
+  const [books, setBooks] = useState([]);
+  const [objBook, setObjBook] = useState(book);
+
+
+  useEffect(() => {
+    fetch('http://localhost:8080/listBook')
+    .then(books => books.json())
+    .then(books_converted => setBooks(books_converted));
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Table vector={books}/>
     </div>
   );
 }
